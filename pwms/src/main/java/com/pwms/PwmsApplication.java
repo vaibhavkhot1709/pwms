@@ -8,8 +8,6 @@ public class PwmsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PwmsApplication.class, args);
-		
-		System.out.println(">>>>>>>>>>>>");
 	}
 
 }
