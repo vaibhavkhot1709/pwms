@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pwms.dao.StdDaoImpl;
 import com.pwms.entity.Student;
+import com.pwms.exceptions.StudentNotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -21,26 +22,26 @@ public class StdServiceImpl implements StdService{
 		return daoImpl.saveStudent(student);
 	}
 
-	@Override
-	public Student getStudentById(int stdId) {
-		
-		
-		System.out.println("new changes");
-		List<Integer> stdList = getListOfAllIds();
-		Student stdDel=null;
-		for (Integer id : stdList) {
-			System.out.println(id==stdId);
-	        if (id==stdId) {
-	        	stdDel=daoImpl.getStudentById(stdId);
-	            break;  
-	        }
-	    }
-		if (stdDel==null) {
-	        return null;
-	    }
-		
-		return daoImpl.getStudentById(stdId);
-		}
+//	@Override
+//	public Student getStudentById(int stdId) {
+//		
+//		
+//		System.out.println("new changes");
+//		List<Integer> stdList = getListOfAllIds();
+//		Student stdDel=null;
+//		for (Integer id : stdList) {
+//			System.out.println(id==stdId);
+//	        if (id==stdId) {
+//	        	stdDel=daoImpl.getStudentById(stdId);
+//	            break;  
+//	        }
+//	    }
+//		if (stdDel==null) {
+//	        return null;
+//	    }
+//		
+//		return daoImpl.getStudentById(stdId);
+//		}
 
 	@Override
 	public List<Student> getAllStudent() {
@@ -115,6 +116,16 @@ public class StdServiceImpl implements StdService{
 	}
 	
 
+	@Override
+	public Student getStudentById(int stdId) {
+		
+		Student getStd=daoImpl.getStudentById(stdId);
+		
+		if(getStd==null) {
+			throw new StudentNotFoundException("Student with id "+stdId+" is not found");
+		}
+		return getStd;
+	}
 	
 
 

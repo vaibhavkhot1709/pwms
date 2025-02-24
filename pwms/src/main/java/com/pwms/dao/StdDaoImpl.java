@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pwms.entity.Student;
+import com.pwms.exceptions.StudentNotFoundException;
 import com.pwms.repository.StdRepo;
 
 import jakarta.transaction.Transactional;
@@ -25,7 +26,13 @@ public class StdDaoImpl implements StdDao{
 
 	@Override
 	public Student getStudentById(int stdId) {
-		return stdRepo.getReferenceById(stdId);
+//		return stdRepo.getReferenceById(stdId);
+		Student getStd=stdRepo.getById(stdId);
+		
+		if(getStd==null) {
+			throw new StudentNotFoundException("Student with id "+stdId+" is not found");
+		}
+		return getStd;
 	}
 
 	@Override
