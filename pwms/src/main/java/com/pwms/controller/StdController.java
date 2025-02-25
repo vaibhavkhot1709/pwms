@@ -21,6 +21,7 @@ import com.pwms.entity.Student;
 import com.pwms.service.StdServiceImpl;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pwstd")
@@ -33,7 +34,7 @@ public class StdController {
 	
 	@PostMapping("/student")
 	@Transactional
-	public ResponseEntity<Student> saveStudent(@RequestBody Student student){
+	public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student){
 	
 //		Student saveStudent= serviceImpl.saveStudent(student);
 		return new ResponseEntity<>(serviceImpl.saveStudent(student), HttpStatus.CREATED);
@@ -43,12 +44,7 @@ public class StdController {
 	@Transactional
 	public ResponseEntity<Object> getStudentById(@PathVariable("std_id") int stdId){
 
-
-		
 		Student getStudent = serviceImpl.getStudentById(stdId);
-		if(getStudent==null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Student with ID " + stdId + " is not found send valid Student ID"));
-		}
 		return new ResponseEntity<>(getStudent, HttpStatus.OK);
 	}
 	

@@ -22,27 +22,6 @@ public class StdServiceImpl implements StdService{
 		return daoImpl.saveStudent(student);
 	}
 
-//	@Override
-//	public Student getStudentById(int stdId) {
-//		
-//		
-//		System.out.println("new changes");
-//		List<Integer> stdList = getListOfAllIds();
-//		Student stdDel=null;
-//		for (Integer id : stdList) {
-//			System.out.println(id==stdId);
-//	        if (id==stdId) {
-//	        	stdDel=daoImpl.getStudentById(stdId);
-//	            break;  
-//	        }
-//	    }
-//		if (stdDel==null) {
-//	        return null;
-//	    }
-//		
-//		return daoImpl.getStudentById(stdId);
-//		}
-
 	@Override
 	public List<Student> getAllStudent() {
 		return daoImpl.getAllStudent();
@@ -52,9 +31,9 @@ public class StdServiceImpl implements StdService{
 
 	@Override
 	public void deletStundetById(int stdId) {
-		List<Integer> stdList = getListOfAllIds();
+//		List<Integer> stdList = getListOfAllIds();
 		Student stdDel=null;
-		for (Integer id : stdList) {
+		for (Integer id : getListOfAllIds()) {
 			System.out.println(id==stdId);
 	        if (id==stdId) {
 	        	stdDel=daoImpl.getStudentById(stdId);
@@ -62,7 +41,7 @@ public class StdServiceImpl implements StdService{
 	        }
 	    }
 		if (stdDel==null) {
-	        return;
+			throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
 	    }
 		daoImpl.deletStundetById(stdId);	
 	}
@@ -72,38 +51,48 @@ public class StdServiceImpl implements StdService{
 		daoImpl.deleteAllStudent();
 	}
 
-	@SuppressWarnings({ })
 	@Override
 	@Transactional
 	public Student updateStudentById(int stdId, Student newStudent) {
 		
-		 
-		List<Integer> stdList = getListOfAllIds();
-		Student existingStudent = null;
+//		List<Integer> stdList = getListOfAllIds();
+		//-------------------
 		
-		for (Integer id : stdList) {
+//		Student existingStudent = null;
+//		
+//		for (Integer id : getListOfAllIds()) {
+//			System.out.println(id==stdId);
+//	        if (id==stdId) {
+//	        	existingStudent = new Student();
+//	        	existingStudent.setStdId(stdId);
+//	        	existingStudent.setFirstName(newStudent.getFirstName());
+//	    	    existingStudent.setLastName(newStudent.getLastName());
+//	    	    existingStudent.setContct(newStudent.getContct());
+//	    	    existingStudent.setEmail(newStudent.getEmail());
+//	    	    existingStudent.setAddress(newStudent.getAddress());
+//	    	    
+//	            break;  
+//	        }
+//	    }
+//		
+//		if (existingStudent==null) {
+//			throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
+//	    }
+		
+		//-----------------
+		int idd=0;
+		for (Integer id : getListOfAllIds()) {
 			System.out.println(id==stdId);
-	        if (id==stdId) {
-	        	existingStudent = new Student();
-	        	existingStudent.setStdId(stdId);
-	        	existingStudent.setFirstName(newStudent.getFirstName());
-	    	    existingStudent.setLastName(newStudent.getLastName());
-	    	    existingStudent.setContct(newStudent.getContct());
-	    	    existingStudent.setEmail(newStudent.getEmail());
-	    	    existingStudent.setAddress(newStudent.getAddress());
-	    	    
-	            break;  
+	        if (id==stdId) {	    	    
+	            idd=1;  
 	        }
 	    }
 		
-		if (existingStudent==null) {
-	        return null;
+		if (idd != 1) {
+	        throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
 	    }
-
-	
-//	    Student upadatedStd = daoImpl.updateStudentById(stdId, existingStudent);
 		
-		return daoImpl.updateStudentById(stdId, existingStudent);
+		return daoImpl.updateStudentById(stdId, newStudent);
 	}
 
 	@Override
@@ -119,12 +108,19 @@ public class StdServiceImpl implements StdService{
 	@Override
 	public Student getStudentById(int stdId) {
 		
-		Student getStd=daoImpl.getStudentById(stdId);
+		int idd=0;
+		for (Integer id : getListOfAllIds()) {
+			System.out.println(id==stdId);
+	        if (id==stdId) {	    	    
+	            idd=1;  
+	        }
+	    }
 		
-		if(getStd==null) {
-			throw new StudentNotFoundException("Student with id "+stdId+" is not found");
-		}
-		return getStd;
+		if (idd != 1) {
+	        throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
+	    }
+		return daoImpl.getStudentById(stdId);
+
 	}
 	
 

@@ -1,6 +1,7 @@
 package com.pwms.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,13 +27,11 @@ public class StdDaoImpl implements StdDao{
 
 	@Override
 	public Student getStudentById(int stdId) {
-//		return stdRepo.getReferenceById(stdId);
-		Student getStd=stdRepo.getById(stdId);
-		
-		if(getStd==null) {
-			throw new StudentNotFoundException("Student with id "+stdId+" is not found");
-		}
-		return getStd;
+		return stdRepo.getReferenceById(stdId);
+//		System.out.println("inside daoimpl get");
+//		Student getStd=stdRepo.findById(stdId)
+//				.orElseThrow(()-> new StudentNotFoundException("Student with Id "+stdId+" is not present"));
+//		return getStd;
 	}
 
 	@Override
@@ -56,7 +55,7 @@ public class StdDaoImpl implements StdDao{
 	@Transactional
 	public Student updateStudentById(int stdId, Student updatedStudent) {
 				
-		Student upStd= stdRepo.save(updatedStudent);
+		Student upStd= stdRepo.saveAndFlush(updatedStudent);
 		return upStd;
 	}
 

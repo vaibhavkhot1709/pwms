@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,11 +35,17 @@ public class Student {
 	private int stdId;
 	
 	 @Column(nullable = false)
+	 @NotBlank(message = "First name should not be Blanck")
+	 @NotEmpty(message = "First name should not be Empty")
 	@NotNull(message = "First name should not be NULL")
 	private String firstName;
+	 
+	 @NotBlank(message = "First name should not be Blanck")
+	 @NotEmpty(message = "First name should not be Empty")
 	 @NotNull(message = "Last name should not be NULL")
 	private String lastName;
 	private String email;
+	
 	@NotNull(message = "Contact should not be NULL")
 	private String contct;
 	
