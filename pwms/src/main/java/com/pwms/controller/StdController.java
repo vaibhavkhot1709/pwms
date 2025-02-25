@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pwms.entity.Student;
+import com.pwms.exceptions.IdMustBeInteger;
 import com.pwms.service.StdServiceImpl;
 
 import jakarta.transaction.Transactional;
@@ -35,8 +36,7 @@ public class StdController {
 	@PostMapping("/student")
 	@Transactional
 	public ResponseEntity<Student> saveStudent(@RequestBody @Valid Student student){
-	
-//		Student saveStudent= serviceImpl.saveStudent(student);
+
 		return new ResponseEntity<>(serviceImpl.saveStudent(student), HttpStatus.CREATED);
 	}
 	
@@ -50,9 +50,7 @@ public class StdController {
 	
 	@GetMapping("/students")
 	public ResponseEntity<List<Student>> getAllStudents(){
-		
-//		List<Student> saveStudent = serviceImpl.getAllStudent();
-//		return new ResponseEntity<>(saveStudent, HttpStatus.OK);
+
 		return ResponseEntity.ok(serviceImpl.getAllStudent());
 	}
 	
@@ -79,6 +77,7 @@ public class StdController {
 	
 	@DeleteMapping("/student/{std_id}")
 	public ResponseEntity deleteStudentById(@PathVariable("std_id") int stdId){
+		
 		Student saveStudent = serviceImpl.getStudentById(stdId);
 		
 		if(saveStudent==null) {

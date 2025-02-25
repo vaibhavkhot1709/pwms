@@ -31,4 +31,16 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(value= {IdMustBeInteger.class})
+	public ResponseEntity<ErrorDetails> idMustBeInteger(IdMustBeInteger idMustBeInteger){
+		
+		ErrorDetails errorDetails=new ErrorDetails();
+		errorDetails.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		errorDetails.setStaus(HttpStatus.BAD_REQUEST.name()); 
+		errorDetails.setErrorMessage(idMustBeInteger.getMessage());
+		errorDetails.setLocalDateTime(LocalDateTime.now());
+		
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
 }

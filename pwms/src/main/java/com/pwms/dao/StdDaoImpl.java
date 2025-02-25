@@ -55,7 +55,7 @@ public class StdDaoImpl implements StdDao{
 	@Transactional
 	public Student updateStudentById(int stdId, Student updatedStudent) {
 				
-		Student upStd= stdRepo.saveAndFlush(updatedStudent);
+		Student upStd= stdRepo.save(updatedStudent);
 		return upStd;
 	}
 

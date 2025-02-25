@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pwms.dao.StdDaoImpl;
 import com.pwms.entity.Student;
+import com.pwms.exceptions.IdMustBeInteger;
 import com.pwms.exceptions.StudentNotFoundException;
 
 import jakarta.transaction.Transactional;
@@ -91,6 +92,7 @@ public class StdServiceImpl implements StdService{
 		if (idd != 1) {
 	        throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
 	    }
+		newStudent.setStdId(stdId);
 		
 		return daoImpl.updateStudentById(stdId, newStudent);
 	}
@@ -107,6 +109,10 @@ public class StdServiceImpl implements StdService{
 
 	@Override
 	public Student getStudentById(int stdId) {
+		
+		if (stdId<0) {
+	        throw new IdMustBeInteger("Id must be an Integer having positive value. Pass valid ID");
+	    }
 		
 		int idd=0;
 		for (Integer id : getListOfAllIds()) {
