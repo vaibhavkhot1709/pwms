@@ -2,8 +2,6 @@ package com.pwms.controller;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +18,14 @@ import com.pwms.entity.Student;
 import com.pwms.service.StdServiceImpl;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/pwstd")
-
+@Log4j2
 public class StdController {
 
-	private static  Logger logger= LogManager.getLogger(StdController.class);
+//	private static  Logger logger= LogManager.getLogger(StdController.class);
 	
 	@Autowired
 	StdServiceImpl serviceImpl;
@@ -35,9 +34,9 @@ public class StdController {
 	@Transactional
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student){
 		
-		logger.info("This is info aout save Student");
+		log.info("This is info aout save Student");
 		
-		logger.error("Error at saveStudent Controller");
+		log.error("Error at saveStudent Controller");
 		
 		return new ResponseEntity<>(serviceImpl.saveStudent(student), HttpStatus.CREATED);
 	}

@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.pwms.dao.StdDaoImpl;
 import com.pwms.entity.Student;
-import com.pwms.exceptions.EmptyFieldsInJson;
 import com.pwms.exceptions.IdMustBeInteger;
 import com.pwms.exceptions.StudentNotFoundException;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class StdServiceImpl implements StdService{
 
 	@Autowired
@@ -22,10 +23,10 @@ public class StdServiceImpl implements StdService{
 	@Override
 	public Student saveStudent(Student student) {
 		
-		if(student.getFirstName()==" " || student.getLastName()==" " || student.getContct()==" " || student.getAddress().getBuildingName()==" ") {
-			
-			throw new EmptyFieldsInJson("Pass Valid JSON");
-		}
+//		if(student.getFirstName()==" " || student.getLastName()==" " || student.getContct()==" " || student.getAddress().getBuildingName()==" ") {
+//			
+//			throw new EmptyFieldsInJson("Pass Valid JSON");
+//		}
 		return daoImpl.saveStudent(student);
 	}
 
