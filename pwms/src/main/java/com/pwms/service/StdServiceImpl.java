@@ -12,14 +12,21 @@ import com.pwms.exceptions.IdMustBeInteger;
 import com.pwms.exceptions.StudentNotFoundException;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class StdServiceImpl implements StdService{
 
 	@Autowired
 	StdDaoImpl daoImpl;
 	@Override
 	public Student saveStudent(Student student) {
+		
+//		if(student.getFirstName()==" " || student.getLastName()==" " || student.getContct()==" " || student.getAddress().getBuildingName()==" ") {
+//			
+//			throw new EmptyFieldsInJson("Pass Valid JSON");
+//		}
 		return daoImpl.saveStudent(student);
 	}
 
@@ -32,7 +39,6 @@ public class StdServiceImpl implements StdService{
 
 	@Override
 	public void deletStundetById(int stdId) {
-//		List<Integer> stdList = getListOfAllIds();
 		Student stdDel=null;
 		for (Integer id : getListOfAllIds()) {
 			System.out.println(id==stdId);
@@ -56,31 +62,6 @@ public class StdServiceImpl implements StdService{
 	@Transactional
 	public Student updateStudentById(int stdId, Student newStudent) {
 		
-//		List<Integer> stdList = getListOfAllIds();
-		//-------------------
-		
-//		Student existingStudent = null;
-//		
-//		for (Integer id : getListOfAllIds()) {
-//			System.out.println(id==stdId);
-//	        if (id==stdId) {
-//	        	existingStudent = new Student();
-//	        	existingStudent.setStdId(stdId);
-//	        	existingStudent.setFirstName(newStudent.getFirstName());
-//	    	    existingStudent.setLastName(newStudent.getLastName());
-//	    	    existingStudent.setContct(newStudent.getContct());
-//	    	    existingStudent.setEmail(newStudent.getEmail());
-//	    	    existingStudent.setAddress(newStudent.getAddress());
-//	    	    
-//	            break;  
-//	        }
-//	    }
-//		
-//		if (existingStudent==null) {
-//			throw new StudentNotFoundException("Student with Id "+stdId+" is not present");
-//	    }
-		
-		//-----------------
 		int idd=0;
 		for (Integer id : getListOfAllIds()) {
 			System.out.println(id==stdId);

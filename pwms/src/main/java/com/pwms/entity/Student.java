@@ -37,7 +37,7 @@ public class Student {
 	 @Column(nullable = false)
 	 @NotBlank(message = "First name should not be Blanck")
 	 @NotEmpty(message = "First name should not be Empty")
-	@NotNull(message = "First name should not be NULL")
+	 @NotNull(message = "First name should not be NULL")
 	private String firstName;
 	 
 	 @NotBlank(message = "First name should not be Blanck")

@@ -1,13 +1,11 @@
 package com.pwms.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.pwms.entity.Student;
-import com.pwms.exceptions.StudentNotFoundException;
 import com.pwms.repository.StdRepo;
 
 import jakarta.transaction.Transactional;
@@ -22,7 +20,7 @@ public class StdDaoImpl implements StdDao{
 	public Student saveStudent(Student student) {
 //		return stdRepo.save(student);
 		
-		return stdRepo.saveAndFlush(student);
+		return stdRepo.save(student);
 	}
 
 	@Override

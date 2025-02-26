@@ -43,4 +43,16 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(value= {EmptyFieldsInJson.class})
+	public ResponseEntity<ErrorDetails> emptyFieldsInJson(EmptyFieldsInJson emptyFieldsInJson){
+		
+		ErrorDetails errorDetails=new ErrorDetails();
+		errorDetails.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		errorDetails.setStaus(HttpStatus.BAD_REQUEST.name()); 
+		errorDetails.setErrorMessage(emptyFieldsInJson.getMessage());
+		errorDetails.setLocalDateTime(LocalDateTime.now());
+		
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
 }
