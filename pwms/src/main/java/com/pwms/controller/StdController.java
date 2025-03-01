@@ -1,7 +1,11 @@
 package com.pwms.controller;
 
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +22,16 @@ import com.pwms.entity.Student;
 import com.pwms.service.StdServiceImpl;
 
 import jakarta.transaction.Transactional;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/pwstd")
-@Log4j2
 public class StdController {
-
-//	private static  Logger logger= LogManager.getLogger(StdController.class);
+	
+	private Logger logger=Logger.getLogger(StdController.class);
+	{
+		BasicConfigurator.configure();
+	}
+	
 	
 	@Autowired
 	StdServiceImpl serviceImpl;
@@ -34,17 +40,21 @@ public class StdController {
 	@Transactional
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student){
 		
-		log.info("This is info aout save Student");
+		logger.info("New Student added into DB");
 		
-		log.error("Error at saveStudent Controller");
+		logger.error("Error at saveStudent Controller");
 		
 		return new ResponseEntity<>(serviceImpl.saveStudent(student), HttpStatus.CREATED);
 	}
+	
 	
 	@GetMapping("/student/{std_id}")
 	@Transactional
 	public ResponseEntity<Student> getStudentById(@PathVariable("std_id") int stdId){
 
+		logger.info("Fetching Student from DB");
+		
+		logger.error("Error at get Student Controller");
 		return new ResponseEntity<>(serviceImpl.getStudentById(stdId), HttpStatus.OK);
 	}
 	
@@ -73,5 +83,16 @@ public class StdController {
 		serviceImpl.deleteAllStudent();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	@PostMapping("/students")
+	public ResponseEntity<List<Student>> saveListOfStudents(@RequestBody List<Student> studentsList){
+		
+		List<Student> savedStudents = serviceImpl.saveListOfStudents(studentsList);
+		
+		return  new ResponseEntity<List<Student>>(savedStudents, HttpStatus.CREATED);
+
+	}
+	
+
 	
 }

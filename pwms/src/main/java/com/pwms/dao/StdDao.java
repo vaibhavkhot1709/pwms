@@ -15,5 +15,9 @@ public interface StdDao {
 	public Student updateStudentById(int stdId,Student Student);
 	
 	public List<Integer> getListOfAllIds();
+	
+	public List<Student> saveListOfStudents(List<Student> list);
+	
+	public  List<String> getListOfAllEmails();
 
 }

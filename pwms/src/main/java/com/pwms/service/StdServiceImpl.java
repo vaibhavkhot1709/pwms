@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import com.pwms.dao.StdDaoImpl;
 import com.pwms.entity.Student;
 import com.pwms.exceptions.IdMustBeInteger;
+import com.pwms.exceptions.ListOfStudentsExistsException;
+import com.pwms.exceptions.StudentExistsException;
 import com.pwms.exceptions.StudentNotFoundException;
 
 import jakarta.transaction.Transactional;
-import lombok.extern.log4j.Log4j2;
 
 @Service
-@Log4j2
 public class StdServiceImpl implements StdService{
 
 	@Autowired
@@ -23,10 +23,9 @@ public class StdServiceImpl implements StdService{
 	@Override
 	public Student saveStudent(Student student) {
 		
-//		if(student.getFirstName()==" " || student.getLastName()==" " || student.getContct()==" " || student.getAddress().getBuildingName()==" ") {
-//			
-//			throw new EmptyFieldsInJson("Pass Valid JSON");
-//		}
+		if(checkStudentExist(student)== true) {
+			throw new StudentExistsException("Student with this "+student.getEmail()+" already exists please try with new Email");
+		}
 		return daoImpl.saveStudent(student);
 	}
 
@@ -97,7 +96,6 @@ public class StdServiceImpl implements StdService{
 		
 		int idd=0;
 		for (Integer id : getListOfAllIds()) {
-			System.out.println(id==stdId);
 	        if (id==stdId) {	    	    
 	            idd=1;  
 	        }
@@ -110,6 +108,43 @@ public class StdServiceImpl implements StdService{
 
 	}
 	
-
+	@Override
+	public List<Student> saveListOfStudents(List<Student> list){
+		
+		List<Student> matchingStudents= list.stream().
+				filter(student -> getListOfAllEmails().contains(student.getEmail())).collect(Collectors.toList());		
+		
+		if(!matchingStudents.isEmpty()) {
+			
+			List<String> matchingEmails=matchingStudents.stream().map(Student::getEmail).collect(Collectors.toList());
+			
+			throw new ListOfStudentsExistsException("Students with these emails already exist: " + matchingEmails.toString() + ". Please use unique emails.");
+		}		
+		
+		return daoImpl.saveListOfStudents(list);
+	}
+	
+	@Override
+	public boolean checkStudentExist(Student student) {
+		
+		for(String email:getListOfAllEmails()) {
+			
+			if(email.equals(student.getEmail())) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public  List<String> getListOfAllEmails() {
+		List<Student> stdList = daoImpl.getAllStudent();
+		
+		List<String>stdL=stdList.stream().map(Student:: getEmail).collect(Collectors.toList());
+		
+		return stdL;
+	}
 
 }

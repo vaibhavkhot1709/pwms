@@ -15,5 +15,11 @@ public interface StdService {
 	public Student updateStudentById(int stdId,Student Student);
 	
 	public List<Integer> getListOfAllIds();
+	
+	public List<Student> saveListOfStudents(List<Student> list);
+	
+	public boolean checkStudentExist(Student student);
+	
+	public  List<String> getListOfAllEmails() ;
 
 }

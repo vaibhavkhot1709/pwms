@@ -34,19 +34,26 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int stdId;
 	
-	 @Column(nullable = false)
 	 @NotBlank(message = "First name should not be Blanck")
 	 @NotEmpty(message = "First name should not be Empty")
 	 @NotNull(message = "First name should not be NULL")
+	 @Column(unique = true)
 	private String firstName;
 	 
 	 @NotBlank(message = "First name should not be Blanck")
 	 @NotEmpty(message = "First name should not be Empty")
 	 @NotNull(message = "Last name should not be NULL")
+	 @Column(unique = true)
 	private String lastName;
+	 
+	 @Column(unique = true)
+	 @NotBlank(message = "email should not be Blanck")
+	 @NotEmpty(message = "email should not be Empty")
+	 @NotNull(message = "email should not be NULL")
 	private String email;
 	
 	@NotNull(message = "Contact should not be NULL")
+	 @Column(unique = true)
 	private String contct;
 	
 	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

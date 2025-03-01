@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pwms.entity.Student;
 import com.pwms.repository.StdRepo;
@@ -26,10 +27,6 @@ public class StdDaoImpl implements StdDao{
 	@Override
 	public Student getStudentById(int stdId) {
 		return stdRepo.getReferenceById(stdId);
-//		System.out.println("inside daoimpl get");
-//		Student getStd=stdRepo.findById(stdId)
-//				.orElseThrow(()-> new StudentNotFoundException("Student with Id "+stdId+" is not present"));
-//		return getStd;
 	}
 
 	@Override
@@ -66,6 +63,14 @@ public class StdDaoImpl implements StdDao{
 		
 		return null;
 	}
-
-
+	
+	public List<Student> saveListOfStudents(@RequestBody List<Student> list){
+			
+			return stdRepo.saveAll(list);
+	}
+	
+	public  List<String> getListOfAllEmails(){
+		return null;
+	}
+	
 }

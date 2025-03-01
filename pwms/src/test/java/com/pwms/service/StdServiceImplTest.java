@@ -13,6 +13,9 @@ import com.pwms.entity.Address;
 import com.pwms.entity.Student;
 import com.pwms.repository.StdRepo;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @ExtendWith(MockitoExtension.class)
 public class StdServiceImplTest {
 	
@@ -24,9 +27,9 @@ public class StdServiceImplTest {
 	
 	@Test
 	void saveStudent() {
-		System.out.println("this is my first unit test");
+		log.info(("this is unit test for saveStudent"));
 		
-		Student student=new Student();
+  		Student student=new Student();
 		Address address=new Address();
 		address.setBuildingName("Shyam Palace");
 		address.setPinNum(121212);
@@ -46,5 +49,11 @@ public class StdServiceImplTest {
 		 
 		System.out.println("save completed !");
 	}
+	
+	
+	void getStudent() {
+		
+	}
+	
 
 }

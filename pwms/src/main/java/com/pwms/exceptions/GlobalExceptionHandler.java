@@ -13,16 +13,17 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value={StudentExistsException.class})
 	public ResponseEntity<?> studentExistException(StudentExistsException studentExistsException){
 		ErrorDetails errorDetails=new ErrorDetails();
-		errorDetails.setStatusCode(HttpStatus.OK.value());
+		errorDetails.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		errorDetails.setStaus(HttpStatus.BAD_REQUEST.name()); 
 		errorDetails.setErrorMessage(studentExistsException.getMessage());
 		errorDetails.setLocalDateTime(LocalDateTime.now());
 		
-		return new ResponseEntity<>(errorDetails, HttpStatus.OK);
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
 	
 	
 	@ExceptionHandler(value= {StudentNotFoundException.class})
-	public ResponseEntity<?> studentNotFoundException(StudentNotFoundException studentNotFoundException){
+	public ResponseEntity<ErrorDetails> studentNotFoundException(StudentNotFoundException studentNotFoundException){
 		ErrorDetails errorDetails=new ErrorDetails();
 		errorDetails.setStatusCode(HttpStatus.NOT_FOUND.value());
 		errorDetails.setStaus(HttpStatus.NOT_FOUND.name()); 
@@ -51,6 +52,18 @@ public class GlobalExceptionHandler {
 		errorDetails.setStatusCode(HttpStatus.BAD_REQUEST.value());
 		errorDetails.setStaus(HttpStatus.BAD_REQUEST.name()); 
 		errorDetails.setErrorMessage(emptyFieldsInJson.getMessage());
+		errorDetails.setLocalDateTime(LocalDateTime.now());
+		
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(value= {ListOfStudentsExistsException.class})
+	public ResponseEntity<ErrorDetails> listOfStudentsExistsException(ListOfStudentsExistsException listOfStudentsExistsException){
+		
+		ErrorDetails errorDetails=new ErrorDetails();
+		errorDetails.setStatusCode(HttpStatus.BAD_REQUEST.value());
+		errorDetails.setStaus(HttpStatus.BAD_REQUEST.name()); 
+		errorDetails.setErrorMessage(listOfStudentsExistsException.getMessage());
 		errorDetails.setLocalDateTime(LocalDateTime.now());
 		
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
